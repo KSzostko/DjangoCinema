@@ -15,3 +15,6 @@ media
 
 # virtual env
 venv/
+
+# env variables
+.env
