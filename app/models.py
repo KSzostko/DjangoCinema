@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User, PermissionsMixin
+from datetime import datetime
 
 
 class Clients(models.Model):
-    phone_number = models.CharField(unique=True, max_length=14)
+    phone_number = models.CharField(max_length=14)
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
 
@@ -55,10 +56,10 @@ class Tickets(models.Model):
 
 
 class Workers(User, PermissionsMixin):
-    phone_number = models.CharField(unique=True, max_length=14)
+    phone_number = models.CharField(max_length=14)
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
     position = models.CharField(max_length=50)
-    salary = models.IntegerField()
-    date_of_employment = models.DateField()
+    salary = models.IntegerField(default=1000)
+    date_of_employment = models.DateField(default=datetime.now)
     seances = models.ManyToManyField(Seances)

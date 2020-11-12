@@ -1,3 +1,31 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .models import Workers
+from .forms import UserForm
 
 # Create your views here.
+
+
+def index(request):
+    context = {'var': 'checking if context works'}
+    return render(request, 'app/index.html', context=context)
+
+
+def create_user(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+
+        if form.is_valid():
+            worker = form.save(commit=False)
+            worker.phone_number = form.cleaned_data['phone_number']
+            worker.name = form.cleaned_data['name']
+            worker.surname = form.cleaned_data['surname']
+            worker.position = form.cleaned_data['position']
+            int_salary = int(form.cleaned_data['salary'])
+            worker.salary = int_salary
+            worker.save()
+
+            return redirect('login')
+    else:
+        form = UserForm()
+
+    return render(request, 'app/signup.html', context={'form': form})
