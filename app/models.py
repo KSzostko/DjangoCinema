@@ -36,22 +36,22 @@ class Rooms(models.Model):
 
 class Seances(models.Model):
     date = models.DateTimeField()
-    movie = models.ForeignKey(Movies, models.DO_NOTHING)
-    room = models.ForeignKey(Rooms, models.DO_NOTHING)
+    movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
+    room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
 
 
 class Seats(models.Model):
-    room = models.ForeignKey(Rooms, models.DO_NOTHING)
+    room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
     nr_row = models.IntegerField()
     nr_seat = models.IntegerField()
     surname = models.CharField(max_length=50)
 
 
 class Tickets(models.Model):
-    seance = models.ForeignKey(Seances, models.DO_NOTHING)
-    seat = models.ForeignKey(Seats, models.DO_NOTHING)
-    discount = models.ForeignKey(Discounts, models.DO_NOTHING)
-    client = models.ForeignKey(Clients, models.DO_NOTHING)
+    seance = models.ForeignKey(Seances, on_delete=models.CASCADE)
+    seat = models.ForeignKey(Seats, on_delete=models.CASCADE)
+    discount = models.ForeignKey(Discounts, on_delete=models.CASCADE)
+    client = models.ForeignKey(Clients, on_delete=models.CASCADE)
     price = models.IntegerField()
 
 
