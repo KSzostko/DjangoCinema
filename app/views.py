@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
-from .models import Workers
+from .models import Movies
 from .forms import UserForm
 
 # Create your views here.
 
 
 def index(request):
-    context = {'var': 'checking if context works'}
+    movies = Movies.objects.all()
+    context = {'movies': movies}
     return render(request, 'app/index.html', context=context)
 
 

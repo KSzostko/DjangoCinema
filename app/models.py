@@ -8,15 +8,24 @@ class Clients(models.Model):
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
 
+    def __str__(self):
+        return f'Client {self.name} {self.surname}, phone: {self.phone_number}'
+
 
 class Discounts(models.Model):
     name = models.CharField(unique=True, max_length=50)
     value = models.IntegerField()
 
+    def __str__(self):
+        return f'Discount {self.name} worth {self.value}'
+
 
 class Genres(models.Model):
     name = models.CharField(unique=True, max_length=50)
-    description = models.CharField(max_length=100, )
+    description = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'Genre {self.name} with the description: {self.description}'
 
 
 class Movies(models.Model):
@@ -29,9 +38,15 @@ class Movies(models.Model):
     description = models.CharField(max_length=100)
     genres = models.ManyToManyField(Genres)
 
+    def __str__(self):
+        return f'Movie {self.title} released {self.release_date}'
+
 
 class Rooms(models.Model):
     size = models.IntegerField(unique=True)
+
+    def __str__(self):
+        return f'Room of size {self.size}'
 
 
 class Seances(models.Model):
@@ -39,12 +54,17 @@ class Seances(models.Model):
     movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
     room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'Seance {self.movie.title} in the room {self.room.id} on the day {self.date}'
+
 
 class Seats(models.Model):
     room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
     nr_row = models.IntegerField()
     nr_seat = models.IntegerField()
-    surname = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'Seat number {self.nr_seat} in row {self.nr_row} in the room ${self.room.id}'
 
 
 class Tickets(models.Model):
@@ -53,6 +73,9 @@ class Tickets(models.Model):
     discount = models.ForeignKey(Discounts, on_delete=models.CASCADE)
     client = models.ForeignKey(Clients, on_delete=models.CASCADE)
     price = models.IntegerField()
+
+    def __str__(self):
+        return f'Ticket for the {self.seance} for {self.client}'
 
 
 class Workers(User, PermissionsMixin):
@@ -63,3 +86,6 @@ class Workers(User, PermissionsMixin):
     salary = models.IntegerField(default=1000)
     date_of_employment = models.DateField(default=datetime.now)
     seances = models.ManyToManyField(Seances)
+
+    def __str__(self):
+        return f'Worker {self.name} {self.surname} working on the position {self.position}'
