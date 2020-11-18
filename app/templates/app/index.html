@@ -16,7 +16,7 @@
             <li>
                 <h2>{{ seance.movie.title }}</h2>
                 <p>Termin: {{ seance.date }}</p>
-                <a href="#">Szczegóły</a>
+                <a href="{% url 'seance_detail' pk=seance.pk %}">Szczegóły</a>
             </li>
 
         {% endfor %}

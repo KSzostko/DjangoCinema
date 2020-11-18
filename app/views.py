@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.views import generic
 from .models import Movies, Seances
 from .forms import UserForm
 
@@ -30,3 +31,8 @@ def create_user(request):
         form = UserForm()
 
     return render(request, 'app/signup.html', context={'form': form})
+
+
+class SeanceDetailView(generic.DetailView):
+    model = Seances
+    template_name = 'app/seance_detail.html'
