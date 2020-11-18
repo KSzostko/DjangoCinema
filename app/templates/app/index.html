@@ -5,9 +5,25 @@
     <title>Index</title>
 </head>
 <body>
-    index view
-   {{ user }}
     <h1>Repertuar kina:</h1>
-    {{ movies }}
+    {% if seances %}
+
+    {# @TODO: Wyszukiwarka seansów po dniach i gatunkach #}
+
+        <ul>
+        {% for seance in seances %}
+
+            <li>
+                <h2>{{ seance.movie.title }}</h2>
+                <p>Termin: {{ seance.date }}</p>
+                <a href="#">Szczegóły</a>
+            </li>
+
+        {% endfor %}
+        </ul>
+
+    {% else %}
+        <p>Na chwilę obecną nie ma żadnych seansów</p>
+    {% endif %}
 </body>
 </html>
