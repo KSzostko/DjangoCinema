@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista zniżek</title>
+</head>
+<body>
+    <h1>Aktualnie dostępne zniżki</h1>
+    {% if object_list %}
+
+        <ul>
+        {% for discount in object_list %}
+            <li>
+                <p>Zniżka {{ discount.name }}</p>
+                <p>Wartość zniżki: {{ discount.value }}%</p>
+            </li>
+        {% endfor %}
+        </ul>
+
+    {% else %}
+        <p>Aktualnie nie ma żadnych zniżek</p>
+    {% endif %}
+</body>
+</html>

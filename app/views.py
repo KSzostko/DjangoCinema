@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import generic
-from .models import Movies, Seances
+from .models import Movies, Seances, Discounts
 from .forms import UserForm
 
 # Create your views here.
@@ -41,3 +41,8 @@ class SeanceDetailView(generic.DetailView):
 class MovieDetailView(generic.DetailView):
     model = Movies
     template_name = 'app/movie_detail.html'
+
+
+class DiscountsListView(generic.ListView):
+    model = Discounts
+    template_name = 'app/discounts_list.html'

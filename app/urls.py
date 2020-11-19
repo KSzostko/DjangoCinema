@@ -10,4 +10,5 @@ urlpatterns = [
     path('signup/', views.create_user, name='signup'),
     path('senace/<int:pk>/', views.SeanceDetailView.as_view(), name='seance_detail'),
     path('movie/<int:pk>/', views.MovieDetailView.as_view(), name='movie_detail'),
+    path('discounts/', views.DiscountsListView.as_view(), name='discounts_list'),
 ]
