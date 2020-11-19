@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Szczegóły filmu</title>
+</head>
+<body>
+    <h1>Film {{ object.title }}</h1>
+    <div>
+        <p>Data premiery: {{ object.release_date }}</p>
+        <p>Czas trwania: {{ object.duration }} minut</p>
+        <p>Ograniczenie wiekowe: {{ object.age_restriction }}</p>
+        <p>Reżyseria: {{ object.director }}</p>
+        <p>Obsada: {{ object.cast }}</p>
+        <p>Opis filmu: {{ object.description }}</p>
+        <div>
+            <p>Gatunki filmowe:</p>
+            <ul>
+                {% for genre in object.genres.all %}
+
+                    <li>{{ genre.name }}</li>
+
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

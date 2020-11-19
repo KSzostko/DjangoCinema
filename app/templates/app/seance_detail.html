@@ -8,6 +8,6 @@
     <h1>Seans filmu: {{ object.movie.title }}</h1>
     <p>Termin: {{ object.date }}</p>
     <p>Sala numer {{ object.room.id }}</p>
-    <a href="#">Szczegóły filmu</a>
+    <a href="{% url 'movie_detail' pk=object.movie.pk %}">Szczegóły filmu</a>
 </body>
 </html>

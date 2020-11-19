@@ -36,3 +36,8 @@ def create_user(request):
 class SeanceDetailView(generic.DetailView):
     model = Seances
     template_name = 'app/seance_detail.html'
+
+
+class MovieDetailView(generic.DetailView):
+    model = Movies
+    template_name = 'app/movie_detail.html'
