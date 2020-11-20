@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Signup</title>
-</head>
-<body>
+{# w sumie to może być niepotrzebne np. tylko admin w panelu będzie dodawał #}
+{# pracowników bo tak to każdy mógłby stworzyć konto #}
+{% extends 'app/_base.html' %}
+
+{% block title %}Zarejestruj się{% endblock %}
+
+{% block content %}
+
     <form class="form" action="{% url 'signup' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="button" type="submit">Sign in</button>
     </form>
-</body>
-</html>
+
+{% endblock %}
