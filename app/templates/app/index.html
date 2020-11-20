@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <title>Index</title>
-</head>
-<body>
+{% extends 'app/_base.html' %}
+
+{% block title %}Strona główna{% endblock %}
+
+{% block content %}
+
     <h1>Repertuar kina:</h1>
     {% if seances %}
 
@@ -25,5 +24,5 @@
     {% else %}
         <p>Na chwilę obecną nie ma żadnych seansów</p>
     {% endif %}
-</body>
-</html>
+
+{% endblock %}

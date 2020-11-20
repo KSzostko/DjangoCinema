@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista zniżek</title>
-</head>
-<body>
+{% extends 'app/_base.html' %}
+
+{% block title %}Dostępne zniżki{% endblock %}
+
+{% block content %}
+
     <h1>Aktualnie dostępne zniżki</h1>
     {% if object_list %}
 
@@ -20,5 +19,5 @@
     {% else %}
         <p>Aktualnie nie ma żadnych zniżek</p>
     {% endif %}
-</body>
-</html>
+
+{% endblock %}

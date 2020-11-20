@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <title>Szczegóły seansu</title>
-</head>
-<body>
+{% extends 'app/_base.html' %}
+
+{% block title %}Szczegóły seansu{% endblock %}
+
+{% block content %}
+
     <h1>Seans filmu: {{ object.movie.title }}</h1>
     <p>Termin: {{ object.date }}</p>
     <p>Sala numer {{ object.room.id }}</p>
     <a href="{% url 'movie_detail' pk=object.movie.pk %}">Szczegóły filmu</a>
-</body>
-</html>
+
+{% endblock %}

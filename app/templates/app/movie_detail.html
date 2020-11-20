@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Szczegóły filmu</title>
-</head>
-<body>
+{% extends 'app/_base.html' %}
+
+{% block title %}Szczegóły filmu{% endblock %}
+
+{% block content %}
+
     <h1>Film {{ object.title }}</h1>
     <div>
         <p>Data premiery: {{ object.release_date }}</p>
@@ -24,5 +23,5 @@
             </ul>
         </div>
     </div>
-</body>
-</html>
+
+{% endblock %}
