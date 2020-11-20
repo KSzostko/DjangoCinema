@@ -64,7 +64,7 @@ class Seats(models.Model):
     nr_seat = models.IntegerField()
 
     def __str__(self):
-        return f'Seat number {self.nr_seat} in row {self.nr_row} in the room ${self.room.id}'
+        return f'Seat number {self.nr_seat} in row {self.nr_row} in the room {self.room.id}'
 
 
 class Tickets(models.Model):

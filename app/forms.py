@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Workers
+from .models import Workers, Clients
 
 
 class UserForm(UserCreationForm):
@@ -13,3 +13,11 @@ class UserForm(UserCreationForm):
     class Meta:
         model = Workers
         fields = ('username', 'email', 'password1', 'password2')
+
+
+class BuyTicketForm(forms.Form):
+    name = forms.CharField(max_length=50)
+    surname = forms.CharField(max_length=50)
+    phone = forms.CharField(max_length=50)
+    row = forms.IntegerField()
+    seat = forms.IntegerField()

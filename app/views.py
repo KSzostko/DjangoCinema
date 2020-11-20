@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
-from .models import Movies, Seances, Discounts
-from .forms import UserForm
+from .models import Movies, Seances, Discounts, Clients, Seats, Tickets
+from .forms import UserForm, BuyTicketForm
 
 # Create your views here.
 
@@ -10,6 +10,42 @@ def index(request):
     seances = Seances.objects.all()
     context = {'seances': seances}
     return render(request, 'app/index.html', context=context)
+
+
+def buy_ticket(request, pk):
+    seance = get_object_or_404(Seances, pk=pk)
+
+    if request.method == 'POST':
+        form = BuyTicketForm(request.POST)
+
+        print("no siema siema")
+        if form.is_valid():
+            # creating user
+            name = form.cleaned_data['name']
+            surname = form.cleaned_data['surname']
+            phone = form.cleaned_data['phone']
+            client = Clients(name=name, surname=surname, phone_number=phone)
+            client.save()
+
+            # getting seat
+            # miejsce powinno juz byc raczej wczesniej przez admina do bazy dodane, wiec tutaj tylko wyszukujemy je
+            nr_row = form.cleaned_data['row']
+            print(type(nr_row))
+            nr_seat = form.cleaned_data['seat']
+            seat = get_object_or_404(Seats, room=seance.room, nr_row=nr_row, nr_seat=nr_seat)
+
+            # creating ticket
+            # TODO: doaj znizki do biletu
+            # random discount for testing now
+            discount = Discounts.objects.get(pk=1)
+            # cena bedzie z gory ustolona
+            ticket = Tickets(seance=seance, seat=seat, client=client, discount=discount, price=25)
+            ticket.save()
+
+            return redirect('index')
+    else:
+        form = BuyTicketForm()
+    return render(request, 'app/buy_ticket.html', context={'form': form})
 
 
 def create_user(request):

@@ -8,5 +8,6 @@
     <p>Termin: {{ object.date }}</p>
     <p>Sala numer {{ object.room.id }}</p>
     <a href="{% url 'movie_detail' pk=object.movie.pk %}">Szczegóły filmu</a>
+    <a href="{% url 'buy_ticket' pk=object.pk %}">Kup bilet</a>
 
 {% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'app/_base.html' %}
+
+{% block title %}Rezerwacja{% endblock %}
+
+{% block content %}
+
+    <h1>Kup bilet</h1>
+    <form method="post">
+        {% csrf_token %}
+{#        <h2>Twoje dane</h2>#}
+{#        <p>#}
+{#            <label for="name">Imię</label>#}
+{#            <input type="text" id="name" name="name" placeholder="Podaj swoje imię" required>#}
+{#        </p>#}
+{#        <p>#}
+{#            <label for="surname">Nazwisko</label>#}
+{#            <input type="text" id="surname" name="surname" placeholder="Podaj swoje nazwisko" required>#}
+{#        </p>#}
+{#        <p>#}
+{#            <label for="phone">Numer telefonu</label>#}
+{#            <input type="text" id="phone" name="phone" placeholder="Podaj swój numer telefonu" required>#}
+{#        </p>#}
+{#        <h2>Miejsce na sali</h2>#}
+        {# @TODO: Trzeba jakoś wyświetlać dostępne miejsca #}
+{#        <p>#}
+{#            <label for="row">Rząd</label>#}
+{#            <input type="number" id="row" name="row" placeholder="Podaj numer rzędu" required>#}
+{#        </p>#}
+{#        <p>#}
+{#            <label for="seat">Miejsce</label>#}
+{#            <input type="number" id="seat" name="seat" placeholder="Podaj numer miejsca" required>#}
+{#        </p>#}
+        {{ form.as_p }}
+        <button type="submit">Zarezerwuj</button>
+    </form>
+    
+{% endblock %}
