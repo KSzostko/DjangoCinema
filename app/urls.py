@@ -17,4 +17,5 @@ urlpatterns = [
     path('discount/add/', views.create_discount, name='discount_form'),
     path('room/add/', views.create_room, name='room_form'),
     path('seat/add/', views.create_seat, name='seat_form'),
+    path('seance/add/', views.create_seance, name='seance_form'),
 ]

@@ -56,3 +56,10 @@ class SeatForm(forms.ModelForm):
     class Meta:
         model = models.Seats
         fields = '__all__'
+
+
+class SeanceForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Seances
+        fields = '__all__'

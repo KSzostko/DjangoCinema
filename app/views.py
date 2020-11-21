@@ -137,6 +137,20 @@ def create_seat(request):
     return render(request, 'app/seat_form.html', context={'form': form})
 
 
+def create_seance(request):
+    if request.method == 'POST':
+        form = forms.SeanceForm(request.POST)
+
+        if form.is_valid():
+            seance = form.save()
+
+            return redirect('index')
+    else:
+        form = forms.SeanceForm()
+
+    return render(request, 'app/seat_form.html', context={'form': form})
+
+
 class SeanceDetailView(generic.DetailView):
     model = Seances
     template_name = 'app/seance_detail.html'
