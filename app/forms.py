@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Workers, Clients, Genres
+from . import models
 
 
 class UserForm(UserCreationForm):
@@ -11,7 +11,7 @@ class UserForm(UserCreationForm):
     salary = forms.IntegerField()
 
     class Meta:
-        model = Workers
+        model = models.Workers
         fields = ('username', 'email', 'password1', 'password2')
 
 
@@ -26,5 +26,12 @@ class BuyTicketForm(forms.Form):
 class GenreForm(forms.ModelForm):
 
     class Meta:
-        model = Genres
+        model = models.Genres
         fields = ('name', 'description')
+
+
+class MovieForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Movies
+        fields = '__all__'

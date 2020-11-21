@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from .models import Movies, Seances, Discounts, Clients, Seats, Tickets
-from .forms import UserForm, BuyTicketForm, GenreForm
-
-# Create your views here.
+from . import forms
 
 
 def index(request):
@@ -16,7 +14,7 @@ def buy_ticket(request, pk):
     seance = get_object_or_404(Seances, pk=pk)
 
     if request.method == 'POST':
-        form = BuyTicketForm(request.POST)
+        form = forms.BuyTicketForm(request.POST)
 
         print("no siema siema")
         if form.is_valid():
@@ -44,13 +42,13 @@ def buy_ticket(request, pk):
 
             return redirect('index')
     else:
-        form = BuyTicketForm()
+        form = forms.BuyTicketForm()
     return render(request, 'app/buy_ticket.html', context={'form': form})
 
 
 def create_user(request):
     if request.method == 'POST':
-        form = UserForm(request.POST)
+        form = forms.UserForm(request.POST)
 
         if form.is_valid():
             worker = form.save(commit=False)
@@ -64,23 +62,38 @@ def create_user(request):
 
             return redirect('login')
     else:
-        form = UserForm()
+        form = forms.UserForm()
 
     return render(request, 'app/signup.html', context={'form': form})
 
 
 def create_genre(request):
     if request.method == 'POST':
-        form = GenreForm(request.POST)
+        form = forms.GenreForm(request.POST)
 
         if form.is_valid():
             genre = form.save()
 
             return redirect('index')
     else:
-        form = GenreForm()
+        form = forms.GenreForm()
 
     return render(request, 'app/genre_form.html', context={'form': form})
+
+
+def create_movie(request):
+    if request.method == 'POST':
+        form = forms.MovieForm(request.POST)
+
+        if form.is_valid():
+            movie = form.save()
+
+            return redirect('index')
+    else:
+        form = forms.MovieForm()
+
+    return render(request, 'app/movie_form.html', context={'form': form})
+
 
 class SeanceDetailView(generic.DetailView):
     model = Seances
