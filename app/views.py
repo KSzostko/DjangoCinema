@@ -109,6 +109,20 @@ def create_discount(request):
     return render(request, 'app/discount_form.html', context={'form': form})
 
 
+def create_room(request):
+    if request.method == 'POST':
+        form = forms.RoomForm(request.POST)
+
+        if form.is_valid():
+            room = form.save()
+
+            return redirect('index')
+    else:
+        form = forms.RoomForm()
+
+    return render(request, 'app/room_form.html', context={'form': form})
+
+
 class SeanceDetailView(generic.DetailView):
     model = Seances
     template_name = 'app/seance_detail.html'

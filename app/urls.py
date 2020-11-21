@@ -15,4 +15,5 @@ urlpatterns = [
     path('genre/add/', views.create_genre, name='genre_form'),
     path('movie/add/', views.create_movie, name='movie_form'),
     path('discount/add/', views.create_discount, name='discount_form'),
+    path('room/add/', views.create_room, name='room_form'),
 ]

@@ -1,0 +1,14 @@
+{% extends 'app/_base.html' %}
+
+{% block title %}Dodaj salę{% endblock %}
+
+{% block content %}
+
+    <h2>Dodaj salę kinową</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+    <button type="submit">Dodaj</button>
+    </form>
+
+{% endblock %}
