@@ -95,6 +95,20 @@ def create_movie(request):
     return render(request, 'app/movie_form.html', context={'form': form})
 
 
+def create_discount(request):
+    if request.method == 'POST':
+        form = forms.DiscountForm(request.POST)
+
+        if form.is_valid():
+            discount = form.save()
+
+            return redirect('discounts_list')
+    else:
+        form = forms.DiscountForm()
+
+    return render(request, 'app/discount_form.html', context={'form': form})
+
+
 class SeanceDetailView(generic.DetailView):
     model = Seances
     template_name = 'app/seance_detail.html'

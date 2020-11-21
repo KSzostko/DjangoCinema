@@ -35,3 +35,10 @@ class MovieForm(forms.ModelForm):
     class Meta:
         model = models.Movies
         fields = '__all__'
+
+
+class DiscountForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Discounts
+        fields = '__all__'
