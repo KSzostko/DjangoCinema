@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Workers, Clients
+from .models import Workers, Clients, Genres
 
 
 class UserForm(UserCreationForm):
@@ -21,3 +21,10 @@ class BuyTicketForm(forms.Form):
     phone = forms.CharField(max_length=50)
     row = forms.IntegerField()
     seat = forms.IntegerField()
+
+
+class GenreForm(forms.ModelForm):
+
+    class Meta:
+        model = Genres
+        fields = ('name', 'description')

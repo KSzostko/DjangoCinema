@@ -1,0 +1,14 @@
+{% extends 'app/_base.html' %}
+
+{% block title %}Dodaj gatunek{% endblock %}
+
+{% block content %}
+
+    <h2>Dodaj gatunek filmowy</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+    <button type="submit">Dodaj</button>
+    </form>
+
+{% endblock %}

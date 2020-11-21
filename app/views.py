@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from .models import Movies, Seances, Discounts, Clients, Seats, Tickets
-from .forms import UserForm, BuyTicketForm
+from .forms import UserForm, BuyTicketForm, GenreForm
 
 # Create your views here.
 
@@ -68,6 +68,19 @@ def create_user(request):
 
     return render(request, 'app/signup.html', context={'form': form})
 
+
+def create_genre(request):
+    if request.method == 'POST':
+        form = GenreForm(request.POST)
+
+        if form.is_valid():
+            genre = form.save()
+
+            return redirect('index')
+    else:
+        form = GenreForm()
+
+    return render(request, 'app/genre_form.html', context={'form': form})
 
 class SeanceDetailView(generic.DetailView):
     model = Seances

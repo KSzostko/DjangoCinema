@@ -22,7 +22,7 @@ class Discounts(models.Model):
 
 class Genres(models.Model):
     name = models.CharField(unique=True, max_length=50)
-    description = models.CharField(max_length=100)
+    description = models.TextField()
 
     def __str__(self):
         return f'Genre {self.name} with the description: {self.description}'
@@ -34,8 +34,8 @@ class Movies(models.Model):
     duration = models.IntegerField()
     age_restriction = models.IntegerField()
     director = models.CharField(max_length=20)
-    cast = models.CharField(max_length=100)
-    description = models.CharField(max_length=100)
+    cast = models.TextField()
+    description = models.TextField()
     genres = models.ManyToManyField(Genres)
 
     def __str__(self):
