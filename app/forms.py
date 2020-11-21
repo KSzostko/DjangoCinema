@@ -49,3 +49,10 @@ class RoomForm(forms.ModelForm):
     class Meta:
         model = models.Rooms
         fields = '__all__'
+
+
+class SeatForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Seats
+        fields = '__all__'

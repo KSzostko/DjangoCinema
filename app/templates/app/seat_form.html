@@ -1,0 +1,14 @@
+{% extends 'app/_base.html' %}
+
+{% block title %}Dodaj miejsce{% endblock %}
+
+{% block content %}
+
+    <h2>Dodaj miejsce</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+    <button type="submit">Dodaj</button>
+    </form>
+
+{% endblock %}

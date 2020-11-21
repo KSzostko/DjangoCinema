@@ -46,7 +46,7 @@ class Rooms(models.Model):
     size = models.IntegerField(unique=True)
 
     def __str__(self):
-        return f'Room of size {self.size}'
+        return f'Room number {self.id} of size {self.size}'
 
 
 class Seances(models.Model):
