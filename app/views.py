@@ -148,7 +148,7 @@ def create_seance(request):
     else:
         form = forms.SeanceForm()
 
-    return render(request, 'app/seat_form.html', context={'form': form})
+    return render(request, 'app/seance_form.html', context={'form': form})
 
 
 class SeanceDetailView(generic.DetailView):
