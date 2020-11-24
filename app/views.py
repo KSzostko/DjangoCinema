@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from .models import Movies, Seances, Discounts, Clients, Seats, Tickets, Genres
+from django.utils.timezone import make_aware
 from . import forms
 
 
@@ -165,3 +166,25 @@ class MovieDetailView(generic.DetailView):
 class DiscountsListView(generic.ListView):
     model = Discounts
     template_name = 'app/discounts_list.html'
+
+
+class SearchSeancesView(generic.ListView):
+    model = Seances
+    template_name = 'app/search_result.html'
+
+    def get_queryset(self):
+        name = self.request.GET.get('name')
+        age = int(self.request.GET.get('age'))
+        date = self.request.GET.get('date')
+
+        if date == '':
+            return Seances.objects.filter(
+                movie__title__icontains=name,
+                movie__age_restriction__lte=age
+            )
+        else:
+            return Seances.objects.filter(
+                date__gte=date,
+                movie__title__icontains=name,
+                movie__age_restriction__lte=age
+            )
