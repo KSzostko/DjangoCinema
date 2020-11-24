@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
-from .models import Movies, Seances, Discounts, Clients, Seats, Tickets
+from .models import Movies, Seances, Discounts, Clients, Seats, Tickets, Genres
 from . import forms
 
 
 def index(request):
     seances = Seances.objects.all()
-    context = {'seances': seances}
+    genres = Genres.objects.all()
+    context = {'seances': seances, 'genres': genres}
     return render(request, 'app/index.html', context=context)
 
 
