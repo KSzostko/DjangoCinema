@@ -4,11 +4,16 @@
 
 {% block content %}
 
-    <h2>Dodaj film</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-    <button type="submit">Dodaj</button>
-    </form>
+    {% if user.is_authenticated %}
+        <h2>Dodaj film</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        <button type="submit">Dodaj</button>
+        </form>
+
+    {% else %}
+        <p>Tylko pracownicy mają dostęp do tego formularza</p>
+    {% endif %}
 
 {% endblock %}

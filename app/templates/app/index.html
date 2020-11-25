@@ -4,21 +4,35 @@
 
 {% block content %}
 
-    <h1>Repertuar kina:</h1>
+    <h1 class="mb-5">Repertuar kina</h1>
     {% if seances %}
 
-    {# @TODO: Wyszukiwarka seansów po dniach i gatunkach #}
+        <form action="{% url 'search_results' %}" class="form-inline mb-4 d-flex justify-content-center" method="get">
+            <label class="sr-only" for="name">Nazwa filmu</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="name" name="name" placeholder="Wyszukaj film">
 
-        <ul>
-        {% for seance in seances %}
+            <label class="sr-only" for="age">Ograniczenie wiekowe</label>
+            <input type="number" min="0" class="form-control mb-2 mr-sm-2" id="age" name="age" placeholder="od ilu lat" required>
 
-            <li>
-                <h2>{{ seance.movie.title }}</h2>
-                <p>Termin: {{ seance.date }}</p>
-                <a href="{% url 'seance_detail' pk=seance.pk %}">Szczegóły</a>
-            </li>
+            <label class="sr-only" for="date">Data seansu</label>
+            <input type="date" id="date" name="date" class="form-control mb-2 mr-2">
 
-        {% endfor %}
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+        </form>
+
+        <ul class="row mt-5">
+            {% for seance in seances %}
+
+                <li class="col card mr-4">
+                    <div class="card-body">
+                        <h2 class="card-title mb-1">{{ seance.movie.title }}</h2>
+                        <span class="card-subtitle text-muted">{{ seance.date }}</span>
+                        <p class="card-text mt-4">{{ seance.movie.description }}</p>
+                        <a class="btn btn-primary" href="{% url 'seance_detail' pk=seance.pk %}">Szczegóły</a>
+                    </div>
+                </li>
+
+            {% endfor %}
         </ul>
 
     {% else %}

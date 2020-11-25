@@ -1,11 +1,11 @@
 {% extends 'app/_base.html' %}
 
-{% block title %}Dodaj zniżkę{% endblock %}
+{% block title %}Dodaj seans{% endblock %}
 
 {% block content %}
 
     {% if user.is_authenticated %}
-        <h2>Dodaj zniżkę</h2>
+        <h2>Dodaj seans</h2>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
@@ -15,4 +15,5 @@
     {% else %}
         <p>Tylko pracownicy mają dostęp do tego formularza</p>
     {% endif %}
+
 {% endblock %}

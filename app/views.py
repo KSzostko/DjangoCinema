@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
-from .models import Movies, Seances, Discounts, Clients, Seats, Tickets
+from django.urls import reverse_lazy
+from .models import Movies, Seances, Discounts, Clients, Seats, Tickets, Genres
 from . import forms
 
 
 def index(request):
     seances = Seances.objects.all()
-    context = {'seances': seances}
+    genres = Genres.objects.all()
+    context = {'seances': seances, 'genres': genres}
     return render(request, 'app/index.html', context=context)
 
 
@@ -149,7 +151,7 @@ def create_seance(request):
     else:
         form = forms.SeanceForm()
 
-    return render(request, 'app/seat_form.html', context={'form': form})
+    return render(request, 'app/seance_form.html', context={'form': form})
 
 
 class SeanceDetailView(generic.DetailView):
@@ -165,3 +167,44 @@ class MovieDetailView(generic.DetailView):
 class DiscountsListView(generic.ListView):
     model = Discounts
     template_name = 'app/discounts_list.html'
+
+
+class UpdateMovieView(generic.UpdateView):
+    model = Movies
+    form_class = forms.MovieForm
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        return reverse_lazy('movie_detail', kwargs={'pk': self.kwargs.get('pk')})
+
+
+# trzeba zmienic na funkcje bo inaczej nie da sie przekazac workera raczej
+class UpdateSeanceView(generic.UpdateView):
+    model = Seances
+    form_class = forms.SeanceForm
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        return reverse_lazy('seance_detail', kwargs={'pk': self.kwargs.get('pk')})
+
+
+class SearchSeancesView(generic.ListView):
+    model = Seances
+    template_name = 'app/search_result.html'
+
+    def get_queryset(self):
+        name = self.request.GET.get('name')
+        age = int(self.request.GET.get('age'))
+        date = self.request.GET.get('date')
+
+        if date == '':
+            return Seances.objects.filter(
+                movie__title__icontains=name,
+                movie__age_restriction__lte=age
+            )
+        else:
+            return Seances.objects.filter(
+                date__gte=date,
+                movie__title__icontains=name,
+                movie__age_restriction__lte=age
+            )

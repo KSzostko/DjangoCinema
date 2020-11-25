@@ -1,0 +1,27 @@
+{% extends 'app/_base.html' %}
+
+{% block title %}Wyniki wyszukiwania{% endblock %}
+
+{% block content %}
+
+    <h1>Wyniki wyszukiwania</h1>
+
+    {% if object_list %}
+
+        <ul>
+        {% for seance in object_list %}
+
+            <li>
+                <h2>{{ seance.movie.title }}</h2>
+                <p>Termin: {{ seance.date }}</p>
+                <a href="{% url 'seance_detail' pk=seance.pk %}">Szczegóły</a>
+            </li>
+
+        {% endfor %}
+        </ul>
+
+    {% else %}
+        <p>Niestety nie ma żadnego senasu spełniającego podane kryteria</p>
+    {% endif %}
+
+{% endblock %}

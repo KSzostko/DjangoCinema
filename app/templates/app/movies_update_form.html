@@ -1,0 +1,18 @@
+{% extends 'app/_base.html' %}
+
+{% block title %}Zaktualizuj film{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+    <h2>Zaktualizuj film</h2>
+    <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Zaktualizuj</button>
+    </form>
+    {% else %}
+        <p>Tylko pracownicy mają dostęp do tego formularza</p>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'app/_base.html' %}
+
+{% block title %}Zaktualizuj seans{% endblock %}
+
+{% block content %}
+
+    {#  TODO: Tylko pracownicy przypisani do seansu mogą go aktualizować  #}
+    {{ user.phone_number }}
+    {% if user.is_authenticated %}
+    <h2>Zaktualizuj seans</h2>
+    <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Zaktualizuj</button>
+    </form>
+    {% else %}
+        <p>Tylko pracownicy mają dostęp do tego formularza</p>
+    {% endif %}
+
+{% endblock %}
