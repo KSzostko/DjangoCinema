@@ -1,11 +1,12 @@
 {% extends 'app/_base.html' %}
 
-{% block title %}Zaktualizuj film{% endblock %}
+{% block title %}Zaktualizuj seans{% endblock %}
 
 {% block content %}
 
+    {#  TODO: Tylko pracownicy przypisani do seansu mogą go aktualizować  #}
     {% if user.is_authenticated %}
-    <h2>Zaktualizuj film</h2>
+    <h2>Zaktualizuj seans</h2>
     <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

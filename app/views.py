@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Movies, Seances, Discounts, Clients, Seats, Tickets, Genres
 from . import forms
 
@@ -169,14 +168,22 @@ class DiscountsListView(generic.ListView):
     template_name = 'app/discounts_list.html'
 
 
-class UpdateMovieView(LoginRequiredMixin, generic.UpdateView):
-    login_url = '/accounts/login'
+class UpdateMovieView(generic.UpdateView):
     model = Movies
     form_class = forms.MovieForm
     template_name_suffix = '_update_form'
 
     def get_success_url(self):
         return reverse_lazy('movie_detail', kwargs={'pk': self.kwargs.get('pk')})
+
+
+class UpdateSeanceView(generic.UpdateView):
+    model = Seances
+    form_class = forms.SeanceForm
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        return reverse_lazy('seance_detail', kwargs={'pk': self.kwargs.get('pk')})
 
 
 class SearchSeancesView(generic.ListView):
