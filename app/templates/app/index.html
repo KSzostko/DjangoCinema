@@ -20,13 +20,16 @@
             <button type="submit" class="btn btn-primary mb-2">Submit</button>
         </form>
 
-        <ul>
+        <ul class="row mt-5">
             {% for seance in seances %}
 
-                <li>
-                    <h2>{{ seance.movie.title }}</h2>
-                    <p>Termin: {{ seance.date }}</p>
-                    <a href="{% url 'seance_detail' pk=seance.pk %}">Szczegóły</a>
+                <li class="col card mr-4">
+                    <div class="card-body">
+                        <h2 class="card-title mb-1">{{ seance.movie.title }}</h2>
+                        <span class="card-subtitle text-muted">{{ seance.date }}</span>
+                        <p class="card-text mt-4">{{ seance.movie.description }}</p>
+                        <a class="btn btn-primary" href="{% url 'seance_detail' pk=seance.pk %}">Szczegóły</a>
+                    </div>
                 </li>
 
             {% endfor %}
