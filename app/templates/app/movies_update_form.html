@@ -1,0 +1,14 @@
+{% extends 'app/_base.html' %}
+
+{% block title %}Zaktualizuj film{% endblock %}
+
+{% block content %}
+
+    <h2>Zaktualizuj film</h2>
+    <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Zaktualizuj</button>
+    </form>
+
+{% endblock %}
