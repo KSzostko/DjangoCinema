@@ -36,8 +36,9 @@ def buy_ticket(request, pk):
             # TODO: doaj znizki do biletu
             # random discount for testing now
             discount = Discounts.objects.get(pk=1)
-            # cena bedzie z gory ustolona
-            ticket = Tickets(seance=seance, seat=seat, client=client, discount=discount, price=25)
+            constant_price = 30 #ustalona z gory cena
+            # 
+            ticket = Tickets(seance=seance, seat=seat, client=client, discount=discount, price=constant_price)
             ticket.save()
 
             return redirect('index')
