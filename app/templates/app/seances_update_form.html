@@ -5,6 +5,7 @@
 {% block content %}
 
     {#  TODO: Tylko pracownicy przypisani do seansu mogą go aktualizować  #}
+    {{ user.phone_number }}
     {% if user.is_authenticated %}
     <h2>Zaktualizuj seans</h2>
     <form method="post">

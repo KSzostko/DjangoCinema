@@ -177,6 +177,7 @@ class UpdateMovieView(generic.UpdateView):
         return reverse_lazy('movie_detail', kwargs={'pk': self.kwargs.get('pk')})
 
 
+# trzeba zmienic na funkcje bo inaczej nie da sie przekazac workera raczej
 class UpdateSeanceView(generic.UpdateView):
     model = Seances
     form_class = forms.SeanceForm
