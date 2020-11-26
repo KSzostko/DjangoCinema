@@ -10,7 +10,7 @@ urlpatterns = [
          name='logout', kwargs={'next_page': '/'}),
     path('signup/', views.create_user, name='signup'),
     path('seance/<int:pk>/', views.SeanceDetailView.as_view(), name='seance_detail'),
-    path('seance/<int:pk>/update/', views.UpdateSeanceView.as_view(), name='seance_update'),
+    path('seance/<int:pk>/update/', views.update_seance, name='seance_update'),
     path('movie/<int:pk>/', views.MovieDetailView.as_view(), name='movie_detail'),
     path('movie/<int:pk>/update/', views.UpdateMovieView.as_view(), name='movie_update'),
     path('discounts/', views.DiscountsListView.as_view(), name='discounts_list'),

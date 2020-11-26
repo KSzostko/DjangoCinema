@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.urls import reverse_lazy
-from .models import Movies, Seances, Discounts, Clients, Seats, Tickets, Genres
+from .models import Movies, Seances, Discounts, Clients, Seats, Tickets, Genres, Workers
 from . import forms
 
 
@@ -177,14 +177,26 @@ class UpdateMovieView(generic.UpdateView):
         return reverse_lazy('movie_detail', kwargs={'pk': self.kwargs.get('pk')})
 
 
-# trzeba zmienic na funkcje bo inaczej nie da sie przekazac workera raczej
-class UpdateSeanceView(generic.UpdateView):
-    model = Seances
-    form_class = forms.SeanceForm
-    template_name_suffix = '_update_form'
+def update_seance(request, pk):
+    seance = get_object_or_404(Seances, pk=pk)
+    workers = seance.workers_set.all()
 
-    def get_success_url(self):
-        return reverse_lazy('seance_detail', kwargs={'pk': self.kwargs.get('pk')})
+    current_user = request.user
+    can_edit = False
+
+    # checking if current user is in workers_set assigned to this seance, only then he can modify seance fields
+    for worker in workers:
+        if worker.username == current_user.username:
+            can_edit = True
+
+    form = forms.SeanceForm(request.POST or None, instance=seance)
+
+    if form.is_valid():
+        form.save()
+        return redirect('seance_detail', pk=pk)
+
+    context = {'form': form, 'can_edit': can_edit}
+    return render(request, 'app/seances_update_form.html', context)
 
 
 class SearchSeancesView(generic.ListView):
