@@ -1,0 +1,20 @@
+{% extends 'app/_base.html' %}
+
+{% block title %}Anuluj rezerwację{% endblock %}
+
+{% block content %}
+
+    <h1>Anuluj rezerwację</h1>
+    <p>W celu anulowania rezerwacji musisz podać jej numer oraz numer telefonu podany podczas tej rezerwacji</p>
+
+    {% if error != '' %}
+        <p class="text-danger">{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary">Odwołaj</button>
+    </form>
+
+{% endblock %}

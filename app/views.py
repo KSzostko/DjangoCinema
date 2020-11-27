@@ -263,3 +263,33 @@ class SearchSeancesView(generic.ListView):
                 movie__title__icontains=name,
                 movie__age_restriction__lte=age
             )
+
+
+def delete_ticket(request):
+    global error
+    error = ''
+    if request.method == 'POST':
+        form = forms.DeleteTicketForm(request.POST)
+
+        if form.is_valid():
+            ticket_number = form.cleaned_data['ticket_number']
+            phone_number = form.cleaned_data['phone_number']
+
+            try:
+                ticket = Tickets.objects.get(pk=ticket_number)
+            except Tickets.DoesNotExist:
+                ticket = None
+
+            # correct data - you can delete ticket
+            # otherwise show some message
+            if ticket is not None and ticket.client.phone_number == phone_number:
+                ticket.delete()
+            else:
+                error = 'Nie udało się usunąc biletu, niepoprawne dane'
+                return render(request, 'app/cancel_ticket.html', {'form': form, 'error': error})
+
+            return redirect('index')
+    else:
+        form = forms.DeleteTicketForm()
+
+    return render(request, 'app/cancel_ticket.html', {'form': form, 'error': error})

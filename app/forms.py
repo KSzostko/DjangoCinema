@@ -38,6 +38,11 @@ class BuyTicketForm(forms.Form):
     seat = forms.IntegerField()
 '''
 
+class DeleteTicketForm(forms.Form):
+    ticket_number = forms.IntegerField()
+    phone_number = forms.CharField(max_length=14)
+
+
 class GenreForm(forms.ModelForm):
 
     class Meta:
