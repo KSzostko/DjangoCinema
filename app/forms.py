@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from . import models
 
-
 class UserForm(UserCreationForm):
     phone_number = forms.CharField(max_length=14)
     name = forms.CharField(max_length=50)
@@ -21,7 +20,23 @@ class BuyTicketForm(forms.Form):
     phone = forms.CharField(max_length=50)
     row = forms.IntegerField()
     seat = forms.IntegerField()
-
+    
+    '''
+    discount = forms.MultipleChoiceField(
+        required=True,
+        widget=forms.CheckboxSelectMultiple,
+        choices= ["1","2","3"],
+    )
+    '''
+    
+'''
+class BuyTicketForm(forms.Form):
+    name = forms.CharField(max_length=50)
+    surname = forms.CharField(max_length=50)
+    phone = forms.CharField(max_length=50)
+    row = forms.IntegerField()
+    seat = forms.IntegerField()
+'''
 
 class GenreForm(forms.ModelForm):
 
