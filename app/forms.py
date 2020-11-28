@@ -2,6 +2,9 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from . import models
 
+#link z którego korzystałem
+#https://stackoverflow.com/questions/14660037/django-forms-pass-parameter-to-form
+
 class UserForm(UserCreationForm):
     phone_number = forms.CharField(max_length=14)
     name = forms.CharField(max_length=50)
@@ -13,30 +16,30 @@ class UserForm(UserCreationForm):
         model = models.Workers
         fields = ('username', 'email', 'password1', 'password2')
 
+''' ORGINAŁ
+class BuyTicketForm(forms.Form):    
+    name = forms.CharField(max_length=50)
+    surname = forms.CharField(max_length=50)
+    phone = forms.CharField(max_length=50)
+    row = forms.IntegerField()
+    seat = forms.IntegerField()
 
+''' 
 class BuyTicketForm(forms.Form):
+    '''
+    def __init__(self,*args,**kwargs):
+        super(BuyTicketForm,self).__init__(*args,**kwargs)
+        self.discnt = args[0]['discnt'] 
+        self.fields['discount'].widget = forms.Select(choices=tuple([(name, name) for name in self.discnt])) 
+        '''
     name = forms.CharField(max_length=50)
     surname = forms.CharField(max_length=50)
     phone = forms.CharField(max_length=50)
     row = forms.IntegerField()
     seat = forms.IntegerField()
-    
-    '''
-    discount = forms.MultipleChoiceField(
-        required=True,
-        widget=forms.CheckboxSelectMultiple,
-        choices= ["1","2","3"],
-    )
-    '''
-    
-'''
-class BuyTicketForm(forms.Form):
-    name = forms.CharField(max_length=50)
-    surname = forms.CharField(max_length=50)
-    phone = forms.CharField(max_length=50)
-    row = forms.IntegerField()
-    seat = forms.IntegerField()
-'''
+    #test
+    #discount = forms.CharField(max_length = 50)
+
 
 class DeleteTicketForm(forms.Form):
     ticket_number = forms.IntegerField()

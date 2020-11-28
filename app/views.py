@@ -11,55 +11,19 @@ def index(request):
     context = {'seances': seances, 'genres': genres}
     return render(request, 'app/index.html', context=context)
 
-
-def buy_ticket(request, pk):
-    seance = get_object_or_404(Seances, pk=pk)
-    # test
-    #discounts = Discounts.objects.all()
-
-    if request.method == 'POST':
-
-        form = forms.BuyTicketForm(request.POST, discounts)
-
-        print("no siema siema")
-        print("witaj")
-        if form.is_valid():
-            # creating user
-            name = form.cleaned_data['name']
-            surname = form.cleaned_data['surname']
-            phone = form.cleaned_data['phone']
-            client = Clients(name=name, surname=surname, phone_number=phone)
-            client.save()
-
-            # getting seat
-            # miejsce powinno juz byc raczej wczesniej przez admina do bazy dodane, wiec tutaj tylko wyszukujemy je
-            nr_row = form.cleaned_data['row']
-            print(type(nr_row))
-            nr_seat = form.cleaned_data['seat']
-            seat = get_object_or_404(Seats, room=seance.room, nr_row=nr_row, nr_seat=nr_seat)
-
-            # creating ticket
-            # TODO: doaj znizki do biletu
-            # random discount for testing now
-            discount = Discounts.objects.get(pk=1)
-            constant_price = 30 #ustalona z gory cena
-            # 
-            ticket = Tickets(seance=seance, seat=seat, client=client, discount=discount, price=constant_price)
-            ticket.save()
-
-            return redirect('index')
-    else:
-        form = forms.BuyTicketForm()
-    return render(request, 'app/buy_ticket.html', context={'form': form})
-
-'''
+''' ORGINAŁ
 def buy_ticket(request, pk):
     seance = get_object_or_404(Seances, pk=pk)
 
     if request.method == 'POST':
+
         form = forms.BuyTicketForm(request.POST)
 
         print("no siema siema")
+        if form.is_valid():
+           form = forms.BuyTicketForm(request.POST)
+
+        print("no siema siema")
         print("witaj")
         if form.is_valid():
             # creating user
@@ -89,7 +53,48 @@ def buy_ticket(request, pk):
     else:
         form = forms.BuyTicketForm()
     return render(request, 'app/buy_ticket.html', context={'form': form})
-'''
+
+''' 
+def buy_ticket(request, pk):
+    seance = get_object_or_404(Seances, pk=pk)
+    
+    # test
+    discounts = Discounts.objects.all()
+    d_list = [object.name for object in discounts]
+
+    if request.method == 'POST':
+        form = forms.BuyTicketForm( {'discnt':d_list}, request.POST)
+
+        print("no siema siema")
+        print("witaj")
+        if form.is_valid():
+            # creating user
+            name = form.cleaned_data['name']
+            surname = form.cleaned_data['surname']
+            phone = form.cleaned_data['phone']
+            client = Clients(name=name, surname=surname, phone_number=phone)
+            client.save()
+
+            # getting seat
+            # miejsce powinno juz byc raczej wczesniej przez admina do bazy dodane, wiec tutaj tylko wyszukujemy je
+            nr_row = form.cleaned_data['row']
+            print(type(nr_row))
+            nr_seat = form.cleaned_data['seat']
+            seat = get_object_or_404(Seats, room=seance.room, nr_row=nr_row, nr_seat=nr_seat)
+
+            # creating ticket
+            # TODO: doaj znizki do biletu
+            # random discount for testing now
+            discount = Discounts.objects.get(pk=1)
+            constant_price = 30 #ustalona z gory cena
+            # 
+            ticket = Tickets(seance=seance, seat=seat, client=client, discount=discount, price=constant_price)
+            ticket.save()
+
+            return redirect('index')
+    else:
+        form = forms.BuyTicketForm( {'discnt':d_list})
+    return render(request, 'app/buy_ticket.html', context={'form': form})
 
 
 def create_user(request):
@@ -109,7 +114,6 @@ def create_user(request):
             return redirect('login')
     else:
         form = forms.UserForm()
-
     return render(request, 'app/signup.html', context={'form': form})
 
 
