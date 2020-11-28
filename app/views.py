@@ -63,7 +63,7 @@ def buy_ticket(request, pk):
     d_list = [object.name for object in discounts]
 
     if request.method == 'POST':
-        form = forms.BuyTicketForm( {'discnt':d_list}, request.POST)
+        form = forms.BuyTicketForm( discounts, request.POST)
 
         print("no siema siema")
         print("witaj")
@@ -93,8 +93,8 @@ def buy_ticket(request, pk):
 
             return redirect('index')
     else:
-        form = forms.BuyTicketForm( {'discnt':d_list})
-    return render(request, 'app/buy_ticket.html', context={'form': form})
+        form = forms.BuyTicketForm( discounts)
+    return render(request, 'app/buy_ticket.html', context={'form': form, 'discounts':discounts})
 
 
 def create_user(request):

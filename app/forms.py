@@ -26,20 +26,18 @@ class BuyTicketForm(forms.Form):
 
 ''' 
 class BuyTicketForm(forms.Form):
-    '''
-    def __init__(self,*args,**kwargs):
-        super(BuyTicketForm,self).__init__(*args,**kwargs)
-        self.discnt = args[0]['discnt'] 
-        self.fields['discount'].widget = forms.Select(choices=tuple([(name, name) for name in self.discnt])) 
-        '''
+    def __init__(self,discounts,*args,**kwargs):
+        super(BuyTicketForm,self).__init__(*args,**kwargs) 
+        self.fields['discount'].widget = forms.Select(choices=tuple([(name, name) for name in discounts])) 
     name = forms.CharField(max_length=50)
     surname = forms.CharField(max_length=50)
     phone = forms.CharField(max_length=50)
     row = forms.IntegerField()
     seat = forms.IntegerField()
-    #test
-    #discount = forms.CharField(max_length = 50)
-
+    #
+    discount = forms.CharField(max_length = 50)
+    class Meta:
+        fields = ('discount', )
 
 class DeleteTicketForm(forms.Form):
     ticket_number = forms.IntegerField()
