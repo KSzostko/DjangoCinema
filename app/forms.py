@@ -27,8 +27,9 @@ class BuyTicketForm(forms.Form):
 ''' 
 class BuyTicketForm(forms.Form):
     def __init__(self,discounts,*args,**kwargs):
-        super(BuyTicketForm,self).__init__(*args,**kwargs) 
-        self.fields['discount'].widget = forms.Select(choices=tuple([(name, name) for name in discounts])) 
+        super(BuyTicketForm,self).__init__(*args,**kwargs)
+        # to trzeba poprawic 
+        self.fields['discount'].widget = forms.Select(choices= tuple([(obj.value, obj.name) for obj in discounts])) 
     name = forms.CharField(max_length=50)
     surname = forms.CharField(max_length=50)
     phone = forms.CharField(max_length=50)
@@ -37,7 +38,7 @@ class BuyTicketForm(forms.Form):
     #
     discount = forms.CharField(max_length = 50)
     class Meta:
-        fields = ('discount', )
+        fields = ('discount')
 
 class DeleteTicketForm(forms.Form):
     ticket_number = forms.IntegerField()

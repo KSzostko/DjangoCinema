@@ -60,7 +60,6 @@ def buy_ticket(request, pk):
     
     # test
     discounts = Discounts.objects.all()
-    d_list = [object.name for object in discounts]
 
     if request.method == 'POST':
         form = forms.BuyTicketForm( discounts, request.POST)
@@ -68,7 +67,6 @@ def buy_ticket(request, pk):
         print("no siema siema")
         print("witaj")
         if form.is_valid():
-            # creating user
             name = form.cleaned_data['name']
             surname = form.cleaned_data['surname']
             phone = form.cleaned_data['phone']
@@ -82,13 +80,12 @@ def buy_ticket(request, pk):
             nr_seat = form.cleaned_data['seat']
             seat = get_object_or_404(Seats, room=seance.room, nr_row=nr_row, nr_seat=nr_seat)
 
-            # creating ticket
-            # TODO: doaj znizki do biletu
-            # random discount for testing now
-            discount = Discounts.objects.get(pk=1)
-            constant_price = 30 #ustalona z gory cena
+
+            temp = form.cleaned_data['discount']
+            discount = Discounts.objects.get(value = temp)
+            price = int(30 - (30 * float(discount.value/100))) #30 to ustalona z gory cena
             # 
-            ticket = Tickets(seance=seance, seat=seat, client=client, discount=discount, price=constant_price)
+            ticket = Tickets(seance=seance, seat=seat, client=client, discount=discount, price=price)
             ticket.save()
 
             return redirect('index')
