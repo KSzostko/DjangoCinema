@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.urls import reverse_lazy
-from .models import Movies, Seances, Discounts, Clients, Seats, Tickets, Genres, Workers
+from .models import Movies, Seances, Discounts, Clients, Seats, Tickets, Genres, Workers, Rooms
 from . import forms
 
 
@@ -58,14 +58,30 @@ def buy_ticket(request, pk):
 def buy_ticket(request, pk):
     seance = get_object_or_404(Seances, pk=pk)
     
-    # test
+    # pobranie wszystkich zniżek 
     discounts = Discounts.objects.all()
 
-    if request.method == 'POST':
-        form = forms.BuyTicketForm( discounts, request.POST)
+    # trochę pokrętne ale robi robote
+    # pobranie wszystkich miejsc jakie są na sali przypisanej do seansu 
+    seance_room = Rooms.objects.get(id = seance.room_id)
+    seats_all = Seats.objects.filter(room = seance_room)
+    # pobranie wszystkich zajętych miejsc
+    seance_tickets = Tickets.objects.filter(seance = seance)
+    seats_output = []
+    if seance_tickets:
+        seats_taken = [ticket.seat for ticket in seance_tickets]
+        # usunięcie z wszystkich biletów tych zajętych
+        seats_output = []
+        for seat in seats_all:
+            if seat not in seats_taken:
+                seats_output.append(seat)
+    else:
+        seats_output = seats_all
 
-        print("no siema siema")
-        print("witaj")
+
+    if request.method == 'POST':   # przekazanie zniżek i wolnych biletow do formy 
+        form = forms.BuyTicketForm( discounts, seats_output, request.POST)
+
         if form.is_valid():
             name = form.cleaned_data['name']
             surname = form.cleaned_data['surname']
@@ -73,25 +89,26 @@ def buy_ticket(request, pk):
             client = Clients(name=name, surname=surname, phone_number=phone)
             client.save()
 
-            # getting seat
-            # miejsce powinno juz byc raczej wczesniej przez admina do bazy dodane, wiec tutaj tylko wyszukujemy je
-            nr_row = form.cleaned_data['row']
-            print(type(nr_row))
-            nr_seat = form.cleaned_data['seat']
+           
+            # widget zwraca string składający się z 2 cyfr, temu tak rozdzielone
+            nr_row = form.cleaned_data['seats'][0]
+            nr_seat = form.cleaned_data['seats'][1]
             seat = get_object_or_404(Seats, room=seance.room, nr_row=nr_row, nr_seat=nr_seat)
 
-
+            # wybrana przez klienta zniżka
             temp = form.cleaned_data['discount']
+            # wartość zniżki 
             discount = Discounts.objects.get(value = temp)
+            # obliczanie zniżki 
             price = int(30 - (30 * float(discount.value/100))) #30 to ustalona z gory cena
-            # 
+            
             ticket = Tickets(seance=seance, seat=seat, client=client, discount=discount, price=price)
             ticket.save()
 
             return redirect('index')
-    else:
-        form = forms.BuyTicketForm( discounts)
-    return render(request, 'app/buy_ticket.html', context={'form': form, 'discounts':discounts})
+    else:                           ## przekazanie zniżek i wolnych biletow do formy 
+        form = forms.BuyTicketForm( discounts, seats_output)
+    return render(request, 'app/buy_ticket.html', context={'form': form, 'discounts':discounts, 'seats':seats_output})
 
 
 def create_user(request):

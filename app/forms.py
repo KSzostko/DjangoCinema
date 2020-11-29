@@ -26,19 +26,24 @@ class BuyTicketForm(forms.Form):
 
 ''' 
 class BuyTicketForm(forms.Form):
-    def __init__(self,discounts,*args,**kwargs):
+    # konstruktor konieczny do przekazania parametrów
+    def __init__(self,discounts,seats,*args,**kwargs):
         super(BuyTicketForm,self).__init__(*args,**kwargs)
-        # to trzeba poprawic 
+        # tworzenie tego widgetu do zniżek     
         self.fields['discount'].widget = forms.Select(choices= tuple([(obj.value, obj.name) for obj in discounts])) 
+        # test                                                   # |      to co zwraca             |   
+        self.fields['seats'].widget = forms.Select(choices= tuple([(str(obj.nr_row)+str(obj.nr_seat), 
+            'row: ' + str(obj.nr_row) + ' seat:' + str(obj.nr_seat)) for obj in seats]))
+
     name = forms.CharField(max_length=50)
     surname = forms.CharField(max_length=50)
     phone = forms.CharField(max_length=50)
-    row = forms.IntegerField()
-    seat = forms.IntegerField()
-    #
     discount = forms.CharField(max_length = 50)
+    seats = forms.CharField(max_length = 50)
+    # to coś wzięte z neta, konieczne żeby działało
     class Meta:
-        fields = ('discount')
+        fields = ('discount', 'seats')
+
 
 class DeleteTicketForm(forms.Form):
     ticket_number = forms.IntegerField()
