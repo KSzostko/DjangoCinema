@@ -11,65 +11,25 @@ def index(request):
     context = {'seances': seances, 'genres': genres}
     return render(request, 'app/index.html', context=context)
 
-''' ORGINAŁ
+
 def buy_ticket(request, pk):
     seance = get_object_or_404(Seances, pk=pk)
 
-    if request.method == 'POST':
-
-        form = forms.BuyTicketForm(request.POST)
-
-        print("no siema siema")
-        if form.is_valid():
-           form = forms.BuyTicketForm(request.POST)
-
-        print("no siema siema")
-        print("witaj")
-        if form.is_valid():
-            # creating user
-            name = form.cleaned_data['name']
-            surname = form.cleaned_data['surname']
-            phone = form.cleaned_data['phone']
-            client = Clients(name=name, surname=surname, phone_number=phone)
-            client.save()
-
-            # getting seat
-            # miejsce powinno juz byc raczej wczesniej przez admina do bazy dodane, wiec tutaj tylko wyszukujemy je
-            nr_row = form.cleaned_data['row']
-            print(type(nr_row))
-            nr_seat = form.cleaned_data['seat']
-            seat = get_object_or_404(Seats, room=seance.room, nr_row=nr_row, nr_seat=nr_seat)
-
-            # creating ticket
-            # TODO: doaj znizki do biletu
-            # random discount for testing now
-            discount = Discounts.objects.get(pk=1)
-            constant_price = 30 #ustalona z gory cena
-            # 
-            ticket = Tickets(seance=seance, seat=seat, client=client, discount=discount, price=constant_price)
-            ticket.save()
-
-            return redirect('index')
-    else:
-        form = forms.BuyTicketForm()
-    return render(request, 'app/buy_ticket.html', context={'form': form})
-
-''' 
-def buy_ticket(request, pk):
-    seance = get_object_or_404(Seances, pk=pk)
-    
     # pobranie wszystkich zniżek 
     discounts = Discounts.objects.all()
 
     # trochę pokrętne ale robi robote
     # pobranie wszystkich miejsc jakie są na sali przypisanej do seansu 
-    seance_room = Rooms.objects.get(id = seance.room_id)
-    seats_all = Seats.objects.filter(room = seance_room)
+    seance_room = Rooms.objects.get(id=seance.room_id)
+    seats_all = Seats.objects.filter(room=seance_room)
+
     # pobranie wszystkich zajętych miejsc
-    seance_tickets = Tickets.objects.filter(seance = seance)
+    seance_tickets = Tickets.objects.filter(seance=seance)
+
     seats_output = []
     if seance_tickets:
         seats_taken = [ticket.seat for ticket in seance_tickets]
+
         # usunięcie z wszystkich biletów tych zajętych
         seats_output = []
         for seat in seats_all:
@@ -78,9 +38,8 @@ def buy_ticket(request, pk):
     else:
         seats_output = seats_all
 
-
-    if request.method == 'POST':   # przekazanie zniżek i wolnych biletow do formy 
-        form = forms.BuyTicketForm( discounts, seats_output, request.POST)
+    if request.method == 'POST':  # przekazanie zniżek i wolnych biletow do formy
+        form = forms.BuyTicketForm(discounts, seats_output, request.POST)
 
         if form.is_valid():
             name = form.cleaned_data['name']
@@ -89,26 +48,29 @@ def buy_ticket(request, pk):
             client = Clients(name=name, surname=surname, phone_number=phone)
             client.save()
 
-           
-            # widget zwraca string składający się z 2 cyfr, temu tak rozdzielone
+            # widget zwraca string składający się z kilku cyfr, temu tak rozdzielone
+            # rząd powiniem być zawsze jednocyfrowy, inaczej trzeba to zmienić
             nr_row = form.cleaned_data['seats'][0]
-            nr_seat = form.cleaned_data['seats'][1]
+            nr_seat = form.cleaned_data['seats'][1:]
+
             seat = get_object_or_404(Seats, room=seance.room, nr_row=nr_row, nr_seat=nr_seat)
 
             # wybrana przez klienta zniżka
             temp = form.cleaned_data['discount']
+
             # wartość zniżki 
-            discount = Discounts.objects.get(value = temp)
+            discount = Discounts.objects.get(value=temp)
+
             # obliczanie zniżki 
-            price = int(30 - (30 * float(discount.value/100))) #30 to ustalona z gory cena
-            
+            price = int(30 - (30 * float(discount.value / 100)))  # 30 to ustalona z gory cena
+
             ticket = Tickets(seance=seance, seat=seat, client=client, discount=discount, price=price)
             ticket.save()
 
             return redirect('index')
-    else:                           ## przekazanie zniżek i wolnych biletow do formy 
-        form = forms.BuyTicketForm( discounts, seats_output)
-    return render(request, 'app/buy_ticket.html', context={'form': form, 'discounts':discounts, 'seats':seats_output})
+    else:  # przekazanie zniżek i wolnych biletow do formy
+        form = forms.BuyTicketForm(discounts, seats_output)
+    return render(request, 'app/buy_ticket.html', context={'form': form, 'discounts': discounts, 'seats': seats_output})
 
 
 def create_user(request):
