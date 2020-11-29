@@ -45,8 +45,19 @@ def buy_ticket(request, pk):
             name = form.cleaned_data['name']
             surname = form.cleaned_data['surname']
             phone = form.cleaned_data['phone']
-            client = Clients(name=name, surname=surname, phone_number=phone)
-            client.save()
+
+            # sprawdzamy czy jest juz klient o takich danyc
+            # jesli tak to nie ma potrzebny tworzyc nowego
+            global client
+            try:
+                client = Clients.objects.get(name=name, surname=surname, phone_number=phone)
+            except Clients.DoesNotExist:
+                client = None
+
+            # nie znaleziono takiego klienta, wiec tworzymy nowego
+            if client is None:
+                client = Clients(name=name, surname=surname, phone_number=phone)
+                client.save()
 
             # widget zwraca string składający się z kilku cyfr, temu tak rozdzielone
             # rząd powiniem być zawsze jednocyfrowy, inaczej trzeba to zmienić
