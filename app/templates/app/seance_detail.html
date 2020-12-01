@@ -10,6 +10,9 @@
     <p>Od lat {{ object.movie.age_restriction }}</p>
     <p>Opis filmu: {{ object.movie.description }}</p>
     <a class="btn btn-primary mr-2" href="{% url 'movie_detail' pk=object.movie.pk %}">Szczegóły filmu</a>
-    <a class="btn btn-primary" href="{% url 'buy_ticket' pk=object.pk %}">Kup bilet</a>
+    <a class="btn btn-primary mr-2" href="{% url 'buy_ticket' pk=object.pk %}">Kup bilet</a>
+    {% if user.is_authenticated %}
+        <a class="btn btn-primary" href="{% url 'seance_update' pk=object.pk %}">Zaktualizuj dane</a>
+    {% endif %}
 
 {% endblock %}
