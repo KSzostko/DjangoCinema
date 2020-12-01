@@ -1,0 +1,47 @@
+{% extends 'app/_base.html' %}
+
+{% block title %}Wybierz{% endblock %}
+
+{% block content %}
+
+    <h2>Wybierz element, który chcesz dodać</h2>
+    <ul class=" mt-4" style="display: flex; flex-wrap: wrap; justify-content: center">
+        <li class="col card mr-4" style="flex-basis: 30%; margin-bottom: 16px;">
+            <div class="card-body">
+                <h5 class="card-title">Nowy seans</h5>
+                <a href="{% url 'seance_form' %}" class="btn btn-primary mt-2">Przejdź</a>
+            </div>
+        </li>
+        <li class="col card mr-4" style="flex-basis: 30%; margin-bottom: 16px;">
+            <div class="card-body">
+                <h5>Nowy film</h5>
+                <a href="{% url 'movie_form' %}" class="btn btn-primary mt-2">Przejdź</a>
+            </div>
+        </li>
+        <li class="col card mr-4" style="flex-basis: 30%; margin-bottom: 16px;">
+            <div class="card-body">
+                <h5>Sala kinowa</h5>
+                <a href="{% url 'room_form' %}" class="btn btn-primary mt-2">Przejdź</a>
+            </div>
+        </li>
+        <li class="col card mr-4" style="flex-basis: 30%; margin-bottom: 16px;">
+            <div class="card-body">
+                <h5>Nowe miejsce na sali</h5>
+                <a href="{% url 'seat_form' %}" class="btn btn-primary mt-2">Przejdź</a>
+            </div>
+        </li>
+        <li class="col card mr-4" style="flex-basis: 30%; margin-bottom: 16px;">
+            <div class="card-body">
+                <h5>Nowy gatunek filmowy</h5>
+                <a href="{% url 'genre_form' %}" class="btn btn-primary mt-2">Przejdź</a>
+            </div>
+        </li>
+        <li class="col card mr-4" style="flex-basis: 30%; margin-bottom: 16px;">
+            <div class="card-body">
+                <h5>Nowy rodzaj zniżki</h5>
+                <a href="{% url 'discount_form' %}" class="btn btn-primary mt-2">Przejdź</a>
+            </div>
+        </li>
+    </ul>
+
+{% endblock %}

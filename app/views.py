@@ -5,6 +5,10 @@ from .models import Movies, Seances, Discounts, Clients, Seats, Tickets, Genres,
 from . import forms
 
 
+def select_add(request):
+    return render(request, 'app/add_select.html')
+
+
 def index(request):
     seances = Seances.objects.all()
     genres = Genres.objects.all()

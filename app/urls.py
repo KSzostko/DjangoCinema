@@ -22,4 +22,5 @@ urlpatterns = [
     path('seat/add/', views.create_seat, name='seat_form'),
     path('seance/add/', views.create_seance, name='seance_form'),
     path('ticket/delete', views.delete_ticket, name='ticket_delete'),
+    path('add/', views.select_add, name='select_add'),
 ]
