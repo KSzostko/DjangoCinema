@@ -4,6 +4,10 @@
 
 {% block content %}
 
+{% if ticketid %}
+    <p class="alert alert-success m-5">Twoj numer rezerwacji to: {{ticketid}} ... zapamietaj go aby anulowac rezerwacje</p>
+    {% endif %}
+
     <h1 class="mb-5">Repertuar kina</h1>
     {% if seances %}
 

@@ -11,5 +11,13 @@
         <button type="submit">Zarezerwuj</button>
     </form>
     
+    {% if messages %}
+    <ul class="messages alert alert-success m-5" style="list-style: none;">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
 {% endblock %}
 

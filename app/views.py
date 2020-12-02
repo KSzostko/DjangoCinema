@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.urls import reverse_lazy
 from .models import Movies, Seances, Discounts, Clients, Seats, Tickets, Genres, Workers, Rooms
+from django.contrib import messages
 from . import forms
 
 
@@ -12,7 +13,8 @@ def select_add(request):
 def index(request):
     seances = Seances.objects.all()
     genres = Genres.objects.all()
-    context = {'seances': seances, 'genres': genres}
+    ticketid = ""
+    context = {'seances': seances, 'genres': genres, 'ticketid': ticketid}
     return render(request, 'app/index.html', context=context)
 
 
@@ -81,8 +83,14 @@ def buy_ticket(request, pk):
 
             ticket = Tickets(seance=seance, seat=seat, client=client, discount=discount, price=price)
             ticket.save()
+           
+            
+            seances = Seances.objects.all()
+            genres = Genres.objects.all()
+            ticketid = str(ticket.pk)
+            context = {'seances': seances, 'genres': genres, 'ticketid': ticketid}
+            return render(request, 'app/index.html', context=context)
 
-            return redirect('index')
     else:  # przekazanie zniżek i wolnych biletow do formy
         form = forms.BuyTicketForm(discounts, seats_output)
     return render(request, 'app/buy_ticket.html', context={'form': form, 'discounts': discounts, 'seats': seats_output})
