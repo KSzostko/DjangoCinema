@@ -24,10 +24,10 @@
             <button type="submit" class="btn btn-primary mb-2">Submit</button>
         </form>
 
-        <ul class="row mt-5">
+        <ul class="mt-5" style="display: flex; flex-wrap: wrap">
             {% for seance in seances %}
 
-                <li class="col card mr-4">
+                <li class="card mr-4 mb-4" style="flex-basis: 22%">
                     <div class="card-body" style="display: flex; flex-direction: column; justify-content: flex-start">
                         <h4 class="card-title mb-1">{{ seance.movie.title }}</h4>
                         <span class="card-subtitle text-muted" style="flex-grow: 1; justify-self: flex-end">{{ seance.date }}</span>
