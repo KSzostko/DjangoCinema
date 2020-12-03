@@ -28,11 +28,10 @@
             {% for seance in seances %}
 
                 <li class="col card mr-4">
-                    <div class="card-body">
-                        <h2 class="card-title mb-1">{{ seance.movie.title }}</h2>
-                        <span class="card-subtitle text-muted">{{ seance.date }}</span>
-                        <p class="card-text mt-4">{{ seance.movie.description }}</p>
-                        <a class="btn btn-primary" href="{% url 'seance_detail' pk=seance.pk %}">Szczegóły</a>
+                    <div class="card-body" style="display: flex; flex-direction: column; justify-content: flex-start">
+                        <h4 class="card-title mb-1">{{ seance.movie.title }}</h4>
+                        <span class="card-subtitle text-muted" style="flex-grow: 1; justify-self: flex-end">{{ seance.date }}</span>
+                        <a class="btn btn-primary mt-2" href="{% url 'seance_detail' pk=seance.pk %}">Szczegóły</a>
                     </div>
                 </li>
 
