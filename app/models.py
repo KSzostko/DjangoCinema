@@ -25,7 +25,7 @@ class Genres(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return f'Genre {self.name} with the description: {self.description}'
+        return f'{self.name}'
 
 
 class Movies(models.Model):
